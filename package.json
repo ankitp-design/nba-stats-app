@@ -1,0 +1,9 @@
+{
+  "name": "nba-streak-finder",
+  "version": "1.0.0",
+  "private": true,
+  "description": "NBA 2025-26 stat streak finder web application",
+  "scripts": {
+    "start": "node server.js"
+  }
+}
