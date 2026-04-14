@@ -9,6 +9,8 @@ const resultContainer = document.querySelector("#result");
 const submitButton = document.querySelector("#submit-button");
 
 let players = [];
+let filteredPlayers = [];
+let selectedPlayerId = "";
 
 function setStatus(message, isError = false) {
   statusText.textContent = message;
@@ -26,20 +28,73 @@ function renderOptions(selectElement, options) {
   });
 }
 
+function hidePlayerOptions() {
+  playerOptions.classList.add("hidden");
+}
+
+function showPlayerOptions() {
+  if (!filteredPlayers.length) {
+    hidePlayerOptions();
+    return;
+  }
+
+  playerOptions.classList.remove("hidden");
+}
+
+function selectPlayer(player) {
+  selectedPlayerId = player.id;
+  playerInput.value = player.name;
+  hidePlayerOptions();
+}
+
 function renderPlayers(items) {
+  filteredPlayers = items;
   playerOptions.innerHTML = "";
 
+  if (!items.length) {
+    hidePlayerOptions();
+    return;
+  }
+
   items.forEach((player) => {
-    const option = document.createElement("option");
-    option.value = player.name;
-    option.label = `${player.name} - ${player.team}`;
+    const option = document.createElement("button");
+    option.type = "button";
+    option.className = "autocomplete-option";
+    option.setAttribute("role", "option");
+    option.innerHTML = `
+      <span class="autocomplete-name">${player.name}</span>
+      <span class="autocomplete-team">${player.team}</span>
+    `;
+    option.addEventListener("click", () => selectPlayer(player));
     playerOptions.append(option);
   });
+
+  showPlayerOptions();
 }
 
 function getSelectedPlayer() {
+  if (selectedPlayerId) {
+    return players.find((player) => player.id === selectedPlayerId) || null;
+  }
+
   const lookup = playerInput.value.trim().toLowerCase();
-  return players.find((player) => player.name.toLowerCase() === lookup);
+  return players.find((player) => player.name.toLowerCase() === lookup) || null;
+}
+
+function filterPlayers(query) {
+  const normalizedQuery = query.trim().toLowerCase();
+
+  if (!normalizedQuery) {
+    filteredPlayers = [];
+    hidePlayerOptions();
+    return;
+  }
+
+  const matches = players
+    .filter((player) => player.name.toLowerCase().includes(normalizedQuery))
+    .slice(0, 12);
+
+  renderPlayers(matches);
 }
 
 function formatStatValue(value) {
@@ -152,13 +207,29 @@ async function initialize() {
     renderOptions(statSelect, meta.stats);
     renderOptions(operatorSelect, meta.operators);
     players = playerPayload.players;
-    renderPlayers(players);
     valueInput.value = "10";
     setStatus(`Loaded ${players.length} players from the live ${playerPayload.season} NBA season pool.`);
   } catch (error) {
     setStatus(error.message, true);
   }
 }
+
+playerInput.addEventListener("input", () => {
+  selectedPlayerId = "";
+  filterPlayers(playerInput.value);
+});
+
+playerInput.addEventListener("focus", () => {
+  if (playerInput.value.trim()) {
+    filterPlayers(playerInput.value);
+  }
+});
+
+playerInput.addEventListener("blur", () => {
+  window.setTimeout(() => {
+    hidePlayerOptions();
+  }, 150);
+});
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault();

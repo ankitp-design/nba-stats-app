@@ -42,21 +42,22 @@
 
           <label class="player-field">
             <span>Player name</span>
-            <input
-              id="player-name"
-              name="playerName"
-              list="player-options"
-              autocomplete="off"
-              placeholder="Start typing any current 2025-26 player"
-              required
-            />
-            <datalist id="player-options"></datalist>
+            <div class="autocomplete">
+              <input
+                id="player-name"
+                name="playerName"
+                autocomplete="off"
+                placeholder="Start typing any current 2025-26 player"
+                required
+              />
+              <div id="player-options" class="autocomplete-list hidden" role="listbox" aria-label="Matching players"></div>
+            </div>
           </label>
 
           <button type="submit" id="submit-button">Check streak</button>
         </form>
 
-        <p id="status" class="status" aria-live="polite">Loading the 2025-26 player pool…</p>
+        <p id="status" class="status" aria-live="polite">Loading the 2025-26 player pool...</p>
       </section>
 
       <section id="result" class="result hidden" aria-live="polite"></section>
