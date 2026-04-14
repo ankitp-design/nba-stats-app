@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NBA Streak Finder</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero">
+        <p class="eyebrow">2025-26 NBA Regular Season</p>
+        <h1>Find active player stat streaks from game logs.</h1>
+        <p class="lede">
+          Choose a stat, set the condition, search the season player pool, and see how many games in a row that player
+          has hit your number.
+        </p>
+      </section>
+
+      <section class="panel">
+        <form id="streak-form" class="form">
+          <label>
+            <span>Stat category</span>
+            <select id="stat" name="stat" required></select>
+          </label>
+
+          <label>
+            <span>Operator</span>
+            <select id="operator" name="operator" required></select>
+          </label>
+
+          <label>
+            <span>Value</span>
+            <input id="value" name="value" type="number" step="0.1" min="-999" max="999" required />
+          </label>
+
+          <label class="player-field">
+            <span>Player name</span>
+            <input
+              id="player-name"
+              name="playerName"
+              list="player-options"
+              autocomplete="off"
+              placeholder="Start typing any current 2025-26 player"
+              required
+            />
+            <datalist id="player-options"></datalist>
+          </label>
+
+          <button type="submit" id="submit-button">Check streak</button>
+        </form>
+
+        <p id="status" class="status" aria-live="polite">Loading the 2025-26 player pool…</p>
+      </section>
+
+      <section id="result" class="result hidden" aria-live="polite"></section>
+    </main>
+
+    <script src="/app.js" defer></script>
+  </body>
+</html>

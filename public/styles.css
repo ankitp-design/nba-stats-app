@@ -1,0 +1,275 @@
+:root {
+  --bg: #f5efe3;
+  --panel: rgba(255, 250, 242, 0.82);
+  --panel-strong: #fffaf0;
+  --ink: #16221f;
+  --muted: #55615d;
+  --line: rgba(22, 34, 31, 0.12);
+  --accent: #d96c2c;
+  --accent-dark: #8e3f14;
+  --success: #2d6a4f;
+  --danger: #922b21;
+  --shadow: 0 24px 60px rgba(48, 34, 15, 0.16);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Space Grotesk", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at top left, rgba(217, 108, 44, 0.22), transparent 28%),
+    radial-gradient(circle at right center, rgba(67, 107, 86, 0.2), transparent 24%),
+    linear-gradient(135deg, #efe4cf 0%, #f6f0e5 45%, #ebe2d0 100%);
+}
+
+.shell {
+  width: min(1040px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 48px 0 72px;
+}
+
+.hero {
+  padding: 32px;
+}
+
+.eyebrow {
+  margin: 0 0 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.83rem;
+  color: var(--accent-dark);
+}
+
+h1 {
+  margin: 0;
+  max-width: 12ch;
+  font-size: clamp(2.4rem, 7vw, 5.4rem);
+  line-height: 0.95;
+}
+
+.lede {
+  max-width: 700px;
+  margin: 18px 0 0;
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.panel,
+.result {
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  background: var(--panel);
+  backdrop-filter: blur(16px);
+  box-shadow: var(--shadow);
+}
+
+.panel {
+  padding: 28px;
+}
+
+.form {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  align-items: end;
+}
+
+.player-field {
+  grid-column: span 2;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-weight: 500;
+}
+
+label span {
+  font-size: 0.95rem;
+}
+
+input,
+select,
+button {
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  font: inherit;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.8);
+  color: var(--ink);
+}
+
+input:focus,
+select:focus,
+button:focus {
+  outline: 3px solid rgba(217, 108, 44, 0.22);
+  outline-offset: 1px;
+}
+
+button {
+  padding: 14px 20px;
+  background: var(--accent);
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(217, 108, 44, 0.26);
+}
+
+button:disabled {
+  opacity: 0.7;
+  cursor: wait;
+  transform: none;
+  box-shadow: none;
+}
+
+.status {
+  margin: 16px 4px 0;
+  color: var(--muted);
+}
+
+.result {
+  margin-top: 24px;
+  padding: 28px;
+}
+
+.result.hidden {
+  display: none;
+}
+
+.summary {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 22px;
+}
+
+.summary-card {
+  padding: 24px;
+  border-radius: 24px;
+  background: var(--panel-strong);
+  border: 1px solid var(--line);
+}
+
+.summary-card h2,
+.summary-card h3 {
+  margin-top: 0;
+}
+
+.streak-number {
+  font-size: clamp(3rem, 8vw, 5.5rem);
+  line-height: 1;
+  margin: 12px 0;
+}
+
+.accent {
+  color: var(--accent-dark);
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.pill {
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(217, 108, 44, 0.12);
+  color: var(--accent-dark);
+  font-size: 0.88rem;
+}
+
+.games {
+  margin-top: 24px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 12px 10px;
+  border-bottom: 1px solid var(--line);
+}
+
+th {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.hit {
+  color: var(--success);
+  font-weight: 700;
+}
+
+.miss {
+  color: var(--danger);
+  font-weight: 700;
+}
+
+.empty {
+  margin: 0;
+  color: var(--muted);
+}
+
+.mono {
+  font-family: "IBM Plex Mono", monospace;
+}
+
+@media (max-width: 860px) {
+  .form {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .player-field {
+    grid-column: span 2;
+  }
+
+  .summary {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 540px) {
+  .shell {
+    width: min(100% - 20px, 1040px);
+    padding: 20px 0 40px;
+  }
+
+  .hero,
+  .panel,
+  .result {
+    padding: 20px;
+  }
+
+  .form {
+    grid-template-columns: 1fr;
+  }
+
+  .player-field {
+    grid-column: span 1;
+  }
+}
